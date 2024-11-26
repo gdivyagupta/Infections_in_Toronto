@@ -14,7 +14,7 @@ library(tidyverse)
 library(lubridate)
 
 # Load the simulated dataset
-analysis_data <- read_csv("/data/00-simulated_data/simulated_infections_data.csv")
+analysis_data <- read_csv("data/00-simulated_data/simulated_infections_data.csv")
 
 # Test if the data was successfully loaded
 if (exists("analysis_data")) {
