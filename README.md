@@ -1,7 +1,7 @@
 # Toronto Infection Outbreak Predictions
 
 # Overview
-This study investigates the factors influencing the type and duration of healthcare-related outbreaks in Toronto healthcare institutions. Using Bayesian logistic regression, it predicts the likelihood of a specific outbreak type (e.g., respiratory vs. gastroenteric) based on variables such as healthcare setting, time of year, and causative agent. Additionally, Bayesian survival analysis is applied to study the duration of outbreaks and identify factors associated with prolonged outbreaks.
+This study aims to examine the factors influencing healthcare outbreaks in Toronto healthcare institutions. These factors include: type of infection ( respiratory vs. gastroenteric), causative agent of infection, and duration of infection. These variables are potentially influenced by the setting (type of healthcare institution), time of year, and causative agent. This study uses logitistical regression and Bayesian survival analysis to identify the factors associated with infectious outbreaks and predict the likelihood of a specific outbreak type depending on the aforementioned variables. 
 
 # File Structure
 This repository is structured as:
