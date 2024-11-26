@@ -40,4 +40,4 @@ simulated_data <- tibble(
 head(simulated_data)
 
 # Save the simulated dataset
-write_csv(simulated_data, "/Users/Dell/Desktop/Infections in Toronto/simulated_infections_data.csv")
+write_csv(simulated_data, "data/00-simulated_data/simulated_infections_data.csv")
