@@ -13,4 +13,4 @@ This repository is structured as:
 * **other**: Includes sketches for figures used in the paper and documentation for all LLM usage.
 
 # Statement on LLM usage
-Aspects of  the code were troubleshooted using ChatGPT. ChatGPT was also used to help understand certain statistical concepts used in the development of the model. The entire chat history is documented and available in `other/llms/usage.txt`.
+Aspects of  the code were troubleshooted using ChatGPT. ChatGPT was also used to help understand certain statistical concepts used in the development of the model. The entire chat history is documented and available in `other/llms/llm_usage.txt`.
