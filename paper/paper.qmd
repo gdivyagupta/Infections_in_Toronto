@@ -133,6 +133,264 @@ The inclusion of an array of predictors allowed the model to account for a high 
 # 5.2 Limitations
 This study has several limitations. The dataset relies on accurate reporting by healthcare institutions, which tend to be overworked and can misreport data. Further, multiple data entries were excluded due to incomplete data points, which skews the robustness of the model. The dataset only incorporated information from 2024 and it is unclear if this can be extrapolated to different years. A wider dataset, with more information ranging a 5 or 10 year period, may allow for a more robust model. While some seasonal trends were seen in the analysis, it is still important to note that these are seasonal trends over the span of only one year, and they can vary significantly. More precise week-by-week analysis may be favored over monthly analysis to understand outbreak trends. Further, our outcome variable is binary - respiratory or enteric - and can overlook the aspect of interaction between various types of infections occurring together. 
 
+# Appendix 
+
+# Appendix A: Idealized Survey: Methodology
+
+A trend noticed in our modelling results was that LTCHs report the highest number of outbreaks in comparison to other healthcare settings. It is essential to understand the reasoning behind this in order to better inform policy reform and resource reallocation to curb this issue. Using an idealized survey methodology, this survey aims to identify potential issues in the availability of care, LTCH organizational structure, and other demographic or environmental factors that may influence their pattern of increased outbreaks. Further, it would be ideal to compare the responses of LTCH workers and hospital workers, which reported the least amount of outbreaks overall, to note any discrepancies in operation that may be contributing to the increased outbreaks in LTCH.
+
+Sampling Approach 
+
+Population: Our population of interest are LTCH and hospitals that report infectious outbreaks. Specifically, we are aiming to gain information about the nature of work settings in these healthcare institutions. For this, it is best to contact hospital and LTCH workers, administrators and nursing staff to understand the quality of care provided to the patients as well as the quality of infection control and disease prevention employed at these institutions. A comparison of the nature of infection control practices conducted at hospitals and LTCH will also provide key insights into the issue. 
+Frame: The frame includes workers of LTCH and hospitals in Toronto who have worked in this setting for the past year. This frame can be obtained from hospital and LTCH people directories, by directly contacting these healthcare institutions, and involving Toronto Public Health in the data collection process. 
+Sample: The sample for this survey would be a subset of all hospital and LTCH workers. The sample size must be sufficient enough to make the results of the survey viable for further statistical analysis. We also have to ensure that all aspects of the outbreaks are covered by this sampling frame, which can be done by including specific questions about the nature of different outbreaks as influenced by the time of year, causative agents, and type of care received. 
+This survey follows a stratified random sampling approach to ensure that all types of healthcare settings and causative agents are captured in the data collected. Further, we also want to ensure that a vast array of participants within the healthcare institution care network are represented - such as nurses, administrators, on-call and permanent doctors, critical care unit staff, specific staff for the three types of hospital settings (acute, chronic and psychiatric), etc. This would include a wide array of healthcare workers and allow diversification of opinions, allowing for a holistic understanding of outbreak prevention and management practices in these institutions. 
+Recruitment Strategy
+
+Given that we wish to collect data on specific healthcare institutions instead of individual caregivers, it would be apt to target healthcare institutions to be able to reach all their staff. This can be done by contacting the list of institutions listed in our original Open Data Toronto dataset, contacting other listed hospitals and LTCH as listed by Toronto Public Health, and also contacting any community-based facilities that may operate in the city. These institutions can be contacted by email, telephone, etc. Any individual healthcare workers who aren’t actively working in a healthcare setting can also be contacted by reviewing the healthcare worker directory by Toronto Public Health and being contacted via email or phone, or by running ads in Toronto (in subway stations, on the radio, on social media, at universities) requesting healthcare workers to fill out our survey. This ensures that we not only capture active healthcare staff but also staff that may be on leave, may have worked in healthcare settings in the past, or may have switched careers or healthcare institutions.
+
+Non-Response Handling
+
+If healthcare institutions do not respond, we can follow up with them via alternative modes of communication such as emailing other departments at the institution, follow-up phone calls, contacting them via social media, etc. Individual healthcare workers can also be provided additional incentives such as giveaways or a remuneration for completing the survey. Workers will also be ensured that all their data will be anonymous to promote participation. Further, healthcare institutions will be briefed upon the reason for this study, the potential for resource allocation to alleviate the stress on LTCH and to better support them, and to curb the level of infection outbreaks in Toronto. These reasons will promote healthcare institutions to participate in the study - for reduced outbreak levels and better funding opportunities. 
+
+Strengths & Limitations
+
+This survey aims to gain specific insight regarding the trend of high infection outbreaks in LTCH as compared to other healthcare institutions, specifically hospitals, that have reported a significantly smaller number of outbreaks in comparison to LTCH. This survey thus targets healthcare workers, caregivers, staff and administrators to understand the infection prevention and control practices at these institutions as well as the quality of care given. 
+This survey is a robust tool for understanding the granular, facility-level difficulties an institution might undergo in handling outbreaks. By collecting institution-by-institution data, we can ensure that resource reallocation, budget reforms, and overall policy reforms can be made at the district-level, and not just the city-wide level to meet the individual needs of institutions or a group of institutions. A comparison between LTCH and hospital care practices also provides us with specific insight into how to better handle certain prevention procedures. Further, information about specific institutions can allow us to identify potential heatmaps in the city where greater outbreaks occur, and understand any underlying socio-economic or environmental factors contributing to this. For example, LTCH may quote lower staff-to-resident ratios, older building infrastructure or shared dining/recreational areas as reasons for higher outbreaks. Further, LTCHs tend to have older residents that may have comorbid conditions and increased health vulnerabilities due to a weaker immune system. 
+
+However, this survey has potential limitations as well. As we do not offer any major incentives for filling the survey, we may suffer from a lower participation rate. Many healthcare institutions that do not have high outbreak levels will be unmotivated to participate in this study, specifically if they fear that resource allocation by Toronto Public Health may be an option. This survey relies on self-reports by the workers regarding their institution’s best practices, which can face issues with compliance and high reporting inaccuracy. Further, if healthcare workers are unhappy at their workplace, they are more likely to bias the results. To tackle this issue, the survey includes a few questions to gauge healthcare worker stress levels and satisfaction levels. Lastly, these results are localised for Toronto LTCH and hospitals and may not be generalizable outside the city. 
+By conducting this survey, we aim to understand the reasoning behind higher outbreaks in LTCH as compared to hospitals in Toronto. This informs healthcare institutions, policymakers and healthcare workers of the best practices regarding outbreak prevention and furthers the dialogue for patient safety, alleviating healthcare worker stress, tackling staffing issues, infrastructure developments, and better resource allocation. 
+Idealized Survey 
+
+A sample survey was created using Google Forms, and can be found here: https://forms.gle/aQzZHHpW8sjM9Vog8
+
+All survey questions can be found below as well. 
+
+Toronto Infection Outbreak Tracking Survey
+
+Introduction
+
+Hello! Thank you so much for participating in this study. We aim to understand the nature of infection outbreak prevention and control strategies employed in Toronto’s various healthcare institutions such as Long-term Care Homes (LTCH) and hospitals. Rest assured that all responses to this survey will be anonymous and confidential. This survey should take approximately 10-15 minutes to complete. 
+
+If you have any questions about the survey or the research study, wish to learn more about it, or wish to withdraw from the study, please contact the Principal Investigator: 
+
+Name: Divya Gupta
+Email: div.gupta@utoronto.ca
+
+Thank you! 
+
+Section 1: Demographic Information 
+
+What is your age?
+18-20
+20-30
+30-40
+40-60
+60+
+What is your gender?
+Female
+Male
+Non-binary
+Other:
+What is your role in the healthcare facility?
+Nurse
+Doctor
+Administrator
+Caregiver
+Cleaning Staff
+Other:
+What healthcare facility type do you work for?
+LTCH
+Hospital - Acute Care
+Hospital - Chronic Care
+Hospital - Psychiatric Care
+Other:
+What neighborhood of Toronto do you work in?
+How many years have you worked in a healthcare setting?  
+ less than a year
+1-3 years
+3-5 years
+6-10 years
+10+ years
+How many years of experience do you have with infection outbreak control and prevention practices in healthcare settings?
+less than a year
+1-3 years
+3-5 years
+6-10 years
+10+ years
+ Have you received formal training on infection outbreak prevention and control?
+ Yes, this past year
+Yes, 1-2 years ago
+Yes, more than 2 years ago
+Yes, when I was onboarded
+No
+Do you hold any professional certification related to infection control or healthcare management?
+Yes
+No
+How often have you been directly involved in handling outbreaks at your facility in the past 12 months?
+never
+once or twice
+3-5 times
+multiple times
+  
+
+
+Section 2: Facility Practices
+How frequently are common areas cleaned and disinfected?
+
+
+Multiple times daily
+Daily
+Weekly
+Less often
+Are there isolation protocols for residents exhibiting symptoms of illness?
+Yes
+No
+
+What infection control measures are currently implemented? (select all that apply)
+Use of personal protective equipment (PPE)
+Hand hygiene stations in key areas
+Regular testing of residents and staff
+Temperature checks at facility entrances
+
+How often are HVAC (Heating, Ventilation, and Air Conditioning) systems inspected?
+Monthly
+Every 6 months
+Annually
+Never
+Not sure
+
+How often are infection prevention training sessions conducted for staff?
+Monthly
+Quarterly
+Annually
+Never
+
+Are there dedicated staff for cleaning and sanitation?
+Yes
+No
+Section 3: Staffing
+What is the average staff-to-resident ratio during different shifts?
+
+
+Morning shift: ___
+Afternoon shift: ___
+Night shift: ___
+Have staffing shortages occurred in the past year?
+
+
+Yes, frequently
+Yes, occasionally
+No
+How often do staff rotate between different roles (e.g., caregiving, cleaning)?
+
+
+Frequently
+Occasionally
+Rarely
+Never
+Are staff provided with paid sick leave?
+
+
+Yes
+No
+Do you feel adequately supported in managing outbreak-related challenges?
+Yes
+No
+N/A
+Section 4: Resident Health and Care
+Do residents share rooms?
+Yes, all
+Yes, some
+No, all residents have private rooms
+
+What percentage of residents are immunized annually against:
+
+
+Influenza: ___ %
+COVID-19: ___ %
+Norovirus: ___ %
+Are new residents screened for infectious diseases upon admission?
+
+
+Yes
+No
+How often are residents tested for respiratory and gastrointestinal infections during outbreak seasons?
+
+
+Weekly
+Bi-weekly
+Monthly
+Only during visible symptoms
+
+How often are residents tested for COVID-19?
+Weekly
+Bi-weekly
+Monthly
+Only during visible symptoms
+
+Do residents regularly participate in group activities?
+
+
+Yes, frequently
+Yes, occasionally
+No
+Are residents provided with education about hygiene practices (e.g., handwashing)?
+
+
+Yes
+No
+Are dining and recreation areas shared among residents?
+Yes
+No
+Does the facility have outdoor areas where residents can spend time?
+
+
+Yes
+No
+Are family members of residents informed promptly during outbreaks?
+Yes
+No
+Section 5: Emergency Preparedness
+Does the facility have a written outbreak management plan?
+
+
+Yes
+No
+How frequently are outbreak response drills conducted?
+
+
+Monthly
+Quarterly
+Annually
+Never
+
+Do you find that the outbreak response drills are useful for training?
+Yes, very 
+Yes, somewhat
+Neutral
+No, never attended
+No, not useful
+Other: 
+
+What is the time frame for notifying public health authorities about a suspected outbreak?
+
+
+Within 24 hours
+Within 48 hours
+Within 3 business days
+Longer
+
+Is additional staffing or support brought in during outbreaks?
+Yes
+No
+
+What challenges does your facility face in implementing outbreak prevention and control measures?
+
+Are there any specific recommendations you would like to make for improving infection control in long-term care homes?
+Final Section
+Thank you so much for participating in this survey! Feel free to contact us by emailing div.gupta@utoronto.ca in case of any questions.
+
 # References
 
 R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
