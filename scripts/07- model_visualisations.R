@@ -6,7 +6,7 @@ library(ggeffects)
 library(ggplot2)
 
 # Load the cleaned dataset
-cleaned_data <- read_csv("cleaned_outbreak_data.csv")
+cleaned_data <- read_csv("data/02-analysis_data/cleaned_dataset.csv")
 
 # Default posterior predictive check (histogram)
 pp_check(logistic_model) +
