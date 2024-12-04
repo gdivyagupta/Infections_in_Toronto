@@ -34,3 +34,7 @@ logistic_model <- stan_glm(
 # Model summary
 summary(logistic_model)
 
+# Save the logistic model as an RDS file
+saveRDS(logistic_model, "logistic_model.rds")
+
+
