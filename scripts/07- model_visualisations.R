@@ -1,9 +1,10 @@
-# Load libraries
+# Load required libraries
+library(readr)
 library(rstanarm)
-library(brms)
-library(tidyverse)
-library(ggeffects)
 library(ggplot2)
+library(ggeffects)
+library(scales)
+
 
 # Load the cleaned dataset
 cleaned_data <- read_csv("data/02-analysis_data/cleaned_dataset.csv")
