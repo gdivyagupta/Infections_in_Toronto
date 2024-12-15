@@ -1,7 +1,7 @@
 # Toronto Infection Outbreak Predictions
 
 # Overview
-This study aims to examine the factors influencing healthcare outbreaks in Toronto healthcare institutions. These factors include: type of infection ( respiratory vs. gastroenteric), causative agent of infection, and duration of infection. These variables are potentially influenced by the setting (type of healthcare institution), time of year, and causative agent. This study uses logitistical regression to identify the factors associated with infectious outbreaks and predict the likelihood of a specific outbreak type depending on the aforementioned variables. 
+This study aims to examine the factors influencing healthcare outbreaks in Toronto healthcare institutions. These factors include: type of infection (respiratory vs. gastroenteric), causative agent of infection, and duration of infection. These variables are potentially influenced by the setting (type of healthcare institution), time of year, and causative agent. This study uses logitistical regression to identify the factors associated with infectious outbreaks and predict the likelihood of a specific outbreak type depending on the aforementioned variables. 
 
 # File Structure
 This repository is structured as:
