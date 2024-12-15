@@ -231,7 +231,7 @@ pp_check(logistic_model, overlay = TRUE) +
 
 # Visualisations with the model
 logistic_model |> posterior_summary()
-```{r}
+```
 
 # Results
 
@@ -260,7 +260,7 @@ plot(predicted) +
     color = "Causative Agent"
   ) +
   theme_minimal()
-```{r}
+```
 
 Overall, we see that LTCH settings (β=2.3) are most associated with respiratory outbreaks, followed by Retirement homes and Hospital- Chronic care. Further, COVID-19, Coronavirus,
 and Respiratory Syncytial Virus are the strongest predictors of respiratory outbreaks for causative agents. Causative agents like COVID-19 (β=3.8) strongly increase the likelihood of respiratory outbreaks while norovirus (β=−7.4) strongly increase the likelihood of enteric outbreaks. 
