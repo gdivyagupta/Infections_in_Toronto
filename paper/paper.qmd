@@ -543,6 +543,9 @@ Thank you so much for participating in this survey! Feel free to contact us by e
 # References
 
 R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
-Toronto Public Health. (2024b, November). Outbreaks in Toronto Healthcare Institutions. Toronto; Open Data Toronto.
-https://open.toronto.ca/dataset/outbreaks-in-toronto-healthcare-institutions/
+Toronto Public Health. (2024b, November). Outbreaks in Toronto Healthcare Institutions. Toronto; Open Data Toronto. https://open.toronto.ca/dataset/outbreaks-in-toronto-healthcare-institutions/
+Wickham, Hadley. 2016. Ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. https://ggplot2.tidyverse.org. 
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. “Welcome to the tidyverse.” Journal of Open Source Software 4 (43): 1686. https://doi.org/10.21105/joss.01686. 
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2023. Dplyr: A Grammar of Data Manipulation. https://CRAN.R-project.org/package=dplyr.
+
 
