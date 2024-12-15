@@ -116,7 +116,7 @@ cleaned_data |>
     y = "Proportion"
   ) +
   theme_minimal()
-```{r}
+```
 
 While enteric outbreaks are less common, they are most prevalent in retirement homes and hospitals-acute care. Psychiatric care units in hospitals and transitional care systems reported no cases of enteric outbreaks in this dataset.
 Lastly, we aimed to understand the overall interaction trends between the outbreak duration, the causative agent, and the setting of the outbreak. This is illustrated in Figure 4. 
@@ -139,7 +139,7 @@ cleaned_data |>
     legend.text = element_text(size = 8),
     legend.title = element_text(size = 10)
   )
-```{r}
+```
 
 This series of density plots illustrates the duration of outbreaks as stratified by the causative agents and various healthcare settings included in the dataset. This shows that LTHC and Retirement homes report significantly longer outbreak durations, specifically for causative agents such as norovirus and Influenza. Further, transitional care settings have a short outbreak duration. This may be due to strict infection control practices - this raises a question about outbreak control policies in less-monitored settings such as retirement homes which have reported longer outbreak durations. These differences in durations according to healthcare settings also raises a need for setting-tailored outbreak interventions. 
 
