@@ -2,12 +2,14 @@
 title: "Predicting Infection Outbreak Dynamics in Toronto Healthcare Institutions: A Bayesian Approach"
 subtitle: "Respiratory Outbreaks Are More Likely in Long-Term Care Homes and Retirement Homes, Driven by Seasonal Trends and Causative Agents Like COVID-19 and Influenza"
 author: "Divya Gupta"
-date: "December 3, 2024"
-output:
-  html_document:
-    toc: true
-    toc_depth: 3
-    number_sections: true
+thanks: "Code and data are available at: https://github.com/gdivyagupta/Infections_in_Toronto"
+date: today
+date-format: long
+abstract: Identifying key trends in infection outbreaks in a city can help policymakers implement better reforms to support citizens and prevent outbreaks. This study uses cleaned datasets retrieved from Open Data Toronto to develop a model that can have insightful implications for the City of Toronto policymakers, especially regarding resource allocation for outbreak prevention. This study aims to help policymakers better understand the trends of infection outbreaks in Toronto, so that this data can be used to identify problem areas in the city (such as specific times of year). This study examines the factors influencing healthcare outbreaks in Toronto healthcare institutions, such as: type of infection (respiratory vs. gastroenteric), causative agent of infection, setting and month of infection. This study uses Bayesian logistic regression to identify the factors associated with infectious outbreaks and predict the likelihood of a specific outbreak type depending on the aforementioned variables. The findings show that COVID-19 is a significant causative agent for respiratory infections, while norovirus is a causative agent for enteric outbreaks. Moreover, there is a significant increase in the number of outbreaks in winter months and in long term care homes. 
+format: pdf
+number-sections: true
+toc: true
+bibliography: references.bib
 ---
 
 ```{r}
@@ -18,9 +20,6 @@ output:
 library(tidyverse)
 library(palmerpenguins)
 ```
-# Abstract
-Identifying key trends in infection outbreaks in a city can help policymakers implement better reforms to support citizens and prevent outbreaks. This study uses cleaned datasets retrieved from Open Data Toronto to develop a model that can have insightful implications for the City of Toronto policymakers, especially regarding resource allocation for outbreak prevention. This study aims to help policymakers better understand the trends of infection outbreaks in Toronto, so that this data can be used to identify problem areas in the city (such as specific times of year). This study examines the factors influencing healthcare outbreaks in Toronto healthcare institutions, such as: type of infection (respiratory vs. gastroenteric), causative agent of infection, setting and month of infection. This study uses Bayesian logistic regression to identify the factors associated with infectious outbreaks and predict the likelihood of a specific outbreak type depending on the aforementioned variables. The findings show that COVID-19 is a significant causative agent for respiratory infections, while norovirus is a causative agent for enteric outbreaks. Moreover, there is a significant increase in the number of outbreaks in winter months and in long term care homes. 
-
 
 # Introduction
 
@@ -32,7 +31,7 @@ The remainder of the paper is structured as follows. Section 2 details the data,
 
 
 
-# Data {#sec-data}
+# Data {#paper-data-section}
 
 This dataset, entitled “Outbreaks in Toronto Healthcare Institutions” was obtained from Open Data Toronto on November 25, 2024 (Open Data Toronto, 2024) and possesses data from January 2nd, 2024 until November 20, 2024.. It is published by Toronto Public Health and documents infection outbreaks reported by various healthcare institutions in the city (the dataset is updated weekly on Thursday to capture the latest information). This is done in compliance with Ontario’s Health Protection and Promotion Act, which requires healthcare facilities to continuously report all infection outbreaks to their local authorities. This level of data collection allows timely identification and potential containment and reform in affected communities. 
 For the purpose of this study, an infection outbreak (here on referred to as “outbreak”) is defined as a localized increase in the rate of infection above the baseline. In terms of settings, this dataset gathers information from hospitals (acute, psychiatric or chronic care), long term care homes (here on referred to as “LTCH”), retirement homes, and transitional care systems. Further, the dataset includes information about the type of outbreak (for eg., respiratory or enteric), location, the start and end date of the outbreak, and the causative agent(s). While Open Data Toronto possesses multiple other datasets regarding infections and outbreaks in Toronto, they were localised to information about homeless shelters or solely tracked COVID-19 outbreaks in the city. The chosen dataset encompasses a wider range of outbreak settings and includes various causative agents, including COVID-19, positioning it as a wider dataset - allowing us to extract greater insights and holistically understand the nature of infection outbreaks in Toronto.
@@ -51,7 +50,7 @@ Date Outbreak Began: Records the first date, reported as YYYY-MM-DD, that the ou
 
 Date Declared Over: Records, as a YYYY-MM-DD date, when all affected patients were declared infection-free, marking the end of the outbreak. 
 
-# Constructed Variables 
+## Constructed Variables 
 
 We also constructed some variables for the ease of data analysis from the provided variables from the raw dataset. These include:
 
@@ -59,13 +58,13 @@ Duration: This was calculated as the difference between Date Declared Over and D
 
 Month: This was constructed by monitoring the start date of an outbreak, from Date Outbreak Began, to track how seasonal changes may affect outbreak levels in the city.
 
-# Accuracy and Limitations
+## Accuracy and Limitations
 The Open Data Toronto portal provided the raw dataset that had some inconsistencies, namely - various fields had missing entries in the “Date Declared Over” tab, which rendered those data points useless as we could not track the duration of the outbreak. This value is essential for this analysis as our variable, Duration, was constructed as the difference between “Date Declared Over” and “Date Outbreak Began.” Further, some data points had no specific entry for “Type of Outbreak”, and had values like “other” which did not provide usable information for this analysis. For ease of analysis, these data entries were removed while constructing the analysis dataset. 
 Understanding the Data
 Outcome Variable 
 Our model predicts the probability of an outbreak being labeled as respiratory or enteric based on its predictors. To that effect, our outcome variable is “Type_of_Outbreak”, with its results being in binary form of either respiratory or enteric.
 
-# Predictor Variables
+## Predictor Variables
 
 Our analysis mainly focused on three predictor variables to help determine our outcome variable: 
 
@@ -73,13 +72,75 @@ Outbreak Setting: This categorical variable utilises information about which typ
 Causative Agent: This categorical variable houses information about the primary cause of the outbreak, such as COVID-19 or Influenza.
 Month: This categorical variable represents the month of the year in which the outbreak began.
 
-# Visualising the Data
+## Visualising the Data
 
 Figure 1 illustrates the difference between the levels of respiratory and enteric outbreaks in the city. As can be seen, the overwhelming amount of outbreaks reported are respiratory. 
+
+```{r}
+cleaned_data |> 
+  ggplot(aes(x = `Type of Outbreak`, fill = `Type of Outbreak`)) +
+  geom_bar() +
+  labs(
+    title = "Distribution of Outbreak Types",
+    x = "Type of Outbreak",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
 Figure 2 takes this one step further and illustrates the number of outbreaks determined by healthcare settings. This shows that LTHC had an overwhelming majority in the number of outbreaks reported, followed by retirement homes. 
 
-Next, we aimed to understand the interaction between different types of infection outbreaks and the setting in which they occurred. This is illustrated in Figure 3 which is a stacked bar chart. Key insights included the fact that respiratory infections dominated across all types of healthcare settings. While enteric outbreaks are less common, they are most prevalent in retirement homes and hospitals-acute care. Psychiatric care units in hospitals and transitional care systems reported no cases of enteric outbreaks in this dataset.
+```{r}
+cleaned_data |> 
+  ggplot(aes(x = fct_infreq(`Outbreak Setting`), fill = `Outbreak Setting`)) +
+  geom_bar() +
+  coord_flip() +
+  labs(
+    title = "Outbreak Counts by Healthcare Setting",
+    x = "Healthcare Setting",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+Next, we aimed to understand the interaction between different types of infection outbreaks and the setting in which they occurred. This is illustrated in Figure 3. Key insights included the fact that respiratory infections dominated across all types of healthcare settings. 
+
+```{r}
+cleaned_data |> 
+  ggplot(aes(x = `Outbreak Setting`, fill = `Type of Outbreak`)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  labs(
+    title = "Proportion of Outbreak Types by Setting",
+    x = "Healthcare Setting",
+    y = "Proportion"
+  ) +
+  theme_minimal()
+```{r}
+
+While enteric outbreaks are less common, they are most prevalent in retirement homes and hospitals-acute care. Psychiatric care units in hospitals and transitional care systems reported no cases of enteric outbreaks in this dataset.
 Lastly, we aimed to understand the overall interaction trends between the outbreak duration, the causative agent, and the setting of the outbreak. This is illustrated in Figure 4. 
+
+```{r}
+cleaned_data |> 
+  ggplot(aes(x = Duration, fill = `Causative Agent-1`, color = `Causative Agent-1`)) +
+  geom_density(alpha = 0.3) +
+  facet_wrap(~ `Outbreak Setting`, scales = "free_y") +
+  labs(
+    title = "Outbreak Duration by Causative Agent and Setting",
+    x = "Outbreak Duration (days)",
+    y = "Density",
+    fill = "Causative Agent",
+    color = "Causative Agent"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 8),
+    legend.title = element_text(size = 10)
+  )
+```{r}
+
 This series of density plots illustrates the duration of outbreaks as stratified by the causative agents and various healthcare settings included in the dataset. This shows that LTHC and Retirement homes report significantly longer outbreak durations, specifically for causative agents such as norovirus and Influenza. Further, transitional care settings have a short outbreak duration. This may be due to strict infection control practices - this raises a question about outbreak control policies in less-monitored settings such as retirement homes which have reported longer outbreak durations. These differences in durations according to healthcare settings also raises a need for setting-tailored outbreak interventions. 
 
 Overall, these visualisations help understand key parts of the data that will inform our model. Namely, they illustrate that an overwhelming majority of infections are respiratory in nature. Next, there is a difference in the duration of an outbreak according to the healthcare setting, and that there are potential impacts of the causative agent and the month in which the outbreak occurred upon the duration of the outbreak. 
@@ -88,58 +149,144 @@ Overall, these visualisations help understand key parts of the data that will in
 
 # Model
 
-3.1 Model Set-Up
-
-3.1 Model Set-Up
+## 3.1 Model Set-Up
 This study aims to build a Bayesian Logistic Regression model using R (R Core Team, 2023) to predict the probability of a respiratory outbreaks in Toronto. Based on our exploratory data analysis, we can see that predictor variables such as causative agent, healthcare setting, and month/duration of the outbreak are key predictors in helping model this. The model is, thus, as follows: 
-Yi ~ Bernoulli(pii)
-logit(pii) = β0​+β1​⋅Outbreak_Settingi​+β2​⋅Causative_Agent_1i​+β3​⋅Monthi​+ϵi​
+
+```{=tex}
+\[
+y_i \mid \pi_i \sim \text{Bern}(\pi_i)
+\]
+
+\[
+\text{logit}(\pi_i) = \beta_0 + \beta_1 \times \text{Outbreak\_Setting}_i + \beta_2 \times \text{Causative\_Agent\_1}_i + \beta_3 \times \text{Month}_i + \epsilon_i
+\]
+
+\[
+\beta_0 \sim \text{Normal}(0, 5)
+\]
+\[
+\beta_1 \sim \text{Normal}(0, 2.5)
+\]
+\[
+\beta_2 \sim \text{Normal}(0, 2.5)
+\]
+\[
+\beta_3 \sim \text{Normal}(0, 2.5)
+\]
+```
+
 Where: 
-Pi is a predicted probability of a respiratory outbreak for the ith observation. 
-Β0​ is the intercept, that captures the baseline log-odds of a respiratory outbreak. 
-Outbreak_Setting helps determine the role of healthcare settings in the determination of an outbreak.
-Causative_agent captures the role of the primary pathogen that causes the outbreak. 
-Month captures the month in which an outbreak started, aiming to capture any seasonal aspects of outbreaks. 
-Lastly, ei is an error term capturing any noise in the model.
-Priors
+𝜋𝑖 is a predicted probability of a respiratory outbreak for the 𝑖th observation. 
+β0 is the intercept that captures the baseline log-odds of a respiratory outbreak. 
+β1, β2, and β3 are coefficients for the categorical predictors.
+Outbreak_Setting𝑖​ helps determine the role of healthcare settings in the determination of an outbreak.
+Causative_Agent𝑖​ captures the role of the primary pathogen that causes the outbreak. 
+Month𝑖​ captures the month in which an outbreak started, aiming to capture any seasonal aspects of outbreaks. 
+Lastly,  ϵ𝑖​ is an error term capturing any noise in the model.
+
+## Priors
 This model incorporates the following priors: 
 β∼N(0,2.5)\beta \sim N(0, 2.5) for the coefficients of predictors.
 β0∼N(0,5)\beta_0 \sim N(0, 5) for the intercept.
 These are weakly informative priors that help constrain extreme values of the variables without being extremely restrictive.
-3.2 Model Justification
+
+## 3.2 Model Justification
 Since this paper deals with a binary variable such as Respiratory infection outbreaks, logistic Bernoulli regression was used. This is so that prior knowledge and uncertainty (through the priors and error term) can be accommodated and binary outcome variables can be handled effectively. 
 The logit link function in the model ensures that the predicted probability of a respiratory outbreak is between 0 and 1. A Bayesian approach was taken to the model to allow full posterior distributions for each predictive parameter. Further, it allows for the inclusion of prior knowledge, which can be helpful in understanding outbreak trends over a long period of time. Further, the priors help regularize parameter estimates and prevent overfitting to certain parameters such as outbreak settings or causative agents. 
 The predictors were chosen for this model based on our exploratory data analysis, where they were shown to be significant in understanding the type of outbreak. Certain alternative model choices such as regular logistic regression were considered but not used due to their inability to incorporate prior knowledge. The Bayesian model, overall, includes prior knowledge along with a nuance to the convoluted nature of our chosen predictor variable, making it a robust choice for this analysis. 
-3.3 Assumptions and Limitations
+
+## 3.3 Assumptions and Limitations
 
 There are several key assumptions of this model. It assumes that the outcome variable, Type of Outbreak, is a binary outcome (respiratory or enteric). Further, it assumes that each outbreak is an independent event influenced by its own set of predictive variables. However, this assumption may not hold for outbreaks that occurred in the same healthcare setting, or occurred very closely together, or overlapped in the duration or month variables. This model does not account for these potential interactions. Lastly, the weakly informative priors are assumed to appropriately reflect the healthcare setting due to their unrestrictive flexibility. 
 This raises certain limitations to the scope of the model. The model assumes the dataset it was developed on was accurately and consistently reported on by all healthcare institutions. It is possible that the causative agent or the duration of the outbreak, for example, could be misreported which would skew the results. Further, nuanced aspects of healthcare settings such as quality of care provided, healthcare policies, severity of symptoms, and staff-to-patient ratios can vary the severity and occurence of the outbreak but these were not captured by this model. While the month variable was included to capture seasonal trends in outbreaks, it is possible that this may vary year to year. Our dataset only captures information for 2024 and may not be generalizable to a wider range of time without proper adjustment. 
-3.4 Model Validation
+
+## 3.4 Model Validation
 Validation is critical to ensure the models are reliable and provide accurate predictions. As a part of the model validation process, Posterior Predictive Checks were conducted to assess the fit of the model. Figure 5 shows the Posterior Predictive Check that compares the observed data (illustrated by y) and the predicted data (illustrated by yrep). The observed outcome is overlaid with the densities of the simulated outcome to see how well the model’s prediction matches with the real data. 
 There is a close alignment between the two types of data, which shows that the model captures the data distribution effectively. There are slight deviations in the lower probability regions which suggests that there are areas for improvement in the model. This could be tackled in the future by including more predictor variables. 
+
+```{r}
+# Default posterior predictive check (histogram)
+pp_check(logistic_model) +
+  labs(
+    title = "Posterior Predictive Check: Observed vs. Predicted Outcomes",
+    x = "Outcome (Type of Outbreak: Enteric = 0, Respiratory = 1)",
+    y = "Density"
+  ) +
+  theme_minimal()
+
+# Overlay observed and predicted densities (use density comparison)
+pp_check(logistic_model, overlay = TRUE) +
+  labs(
+    title = "Posterior Predictive Check: Density Overlay",
+    x = "Probability of Respiratory Outbreak",
+    y = "Density"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(title = "Legend")) +
+  scale_color_manual(
+    values = c("y" = "black", "yrep" = "lightblue"),
+    labels = c("Observed Data (y)", "Predicted Data (yrep)")
+  )
+
+# Visualisations with the model
+logistic_model |> posterior_summary()
+```{r}
 
 # Results
 
 Figure 6 displays the posterior estimates and their corresponding 95% credible intervals for each predictor in the model. The x-axis represents the effect size as log-odds while the y-axis shows the predictors. This figure shows that LTCH have a high number of respiratory outbreaks, given that their credible intervals are above zero. Hospital-Chronic Care, Hospital-Psychiatric, and Retirement Homes also have positive effects but have differing magnitudes and credible intervals. Further, causative agents such as COVID-19, Coronavirus, and Respiratory Syncytial Virus have positive associations with respiratory outbreaks as their credible intervals are above zero. Influenza A and Metapneumovirus also have an association with respiratory outbreaks but have wider intervals, showing uncertainty. On the other hand, norovirus is heavily associated with enteric outbreaks as they have a negative association with respiratory outbreaks. There is a wide variability in the month and its association with different outbreaks, illustrating uncertainty in this predictor. 
+
+```{r}
+# Plot credible intervals with axis labels and title
+plot(logistic_model, type = "intervals") +
+  labs(
+    title = "Posterior Estimates and 95% Credible Intervals",
+    x = "Effect Size (Log-Odds)",
+    y = "Predictors"
+  ) +
+  theme_minimal()
+
+# Generate predicted values
+predicted <- ggpredict(logistic_model, terms = c("Outbreak_Setting", "Causative_Agent_1"))
+
+# Plot with sufficient colors
+plot(predicted) +
+  scale_color_manual(values = scales::hue_pal()(20)) +  # Generate a palette with at least 20 colors
+  labs(
+    title = "Predicted Probabilities by Outbreak Setting and Causative Agent",
+    x = "Outbreak Setting",
+    y = "Predicted Probability",
+    color = "Causative Agent"
+  ) +
+  theme_minimal()
+```{r}
+
 Overall, we see that LTCH settings (β=2.3) are most associated with respiratory outbreaks, followed by Retirement homes and Hospital- Chronic care. Further, COVID-19, Coronavirus,
 and Respiratory Syncytial Virus are the strongest predictors of respiratory outbreaks for causative agents. Causative agents like COVID-19 (β=3.8) strongly increase the likelihood of respiratory outbreaks while norovirus (β=−7.4) strongly increase the likelihood of enteric outbreaks. 
 
 # 5. Discussion
 Overall, this study aimed to analyse the trends and nature of infection outbreaks in Toronto as determined by various predictors such as setting, causative agents, and month of outbreak occurrence. This data was collected over the year of 2024 in healthcare settings and was reported by Toronto Public Health, available on Open Data Toronto. By employing a Bayesian logistic regression model, this study quantified the association between different outbreak types (respiratory or enteric) and their predictor variables. This information can be used to predict the occurrence of an outbreak based on these variables. These outcomes help determine trouble zones in the city, such as LTCH, and can help policymakers determine key areas for further reform.
 
-# 5.1 Strengths
+## 5.1 Strengths
 The inclusion of an array of predictors allowed the model to account for a high level of variability in the data, and understand the effect of different factors on outbreaks. The Bayesian approach allowed the quantification of categorical variables as well as the inclusion of weakly informative priors that allow the incorporation of prior knowledge from healthcare settings. This allowed for key insights, as discussed in the Results section, that showed that LTCH and Retirement Homes are key healthcare settings to be targeted to tackle respiratory outbreaks. 
 
-# 5.2 Limitations
+## 5.2 Limitations
 This study has several limitations. The dataset relies on accurate reporting by healthcare institutions, which tend to be overworked and can misreport data. Further, multiple data entries were excluded due to incomplete data points, which skews the robustness of the model. The dataset only incorporated information from 2024 and it is unclear if this can be extrapolated to different years. A wider dataset, with more information ranging a 5 or 10 year period, may allow for a more robust model. While some seasonal trends were seen in the analysis, it is still important to note that these are seasonal trends over the span of only one year, and they can vary significantly. More precise week-by-week analysis may be favored over monthly analysis to understand outbreak trends. Further, our outcome variable is binary - respiratory or enteric - and can overlook the aspect of interaction between various types of infections occurring together. 
+
+# Conclusion 
+This study provides valuable insights into the dynamics of infection outbreaks in Toronto's healthcare institutions, focusing on respiratory and enteric outbreaks. By employing a Bayesian logistic regression model, we identified significant predictors of outbreak types, including healthcare setting, causative agents, and seasonal trends. These findings shed light on the vulnerability of the Toronto healthcare system, specifically of long-term care homes and retirement homes. During winter months, these spaces are more likely to experience respiratory outbreaks caused by COVID-19 or influenza.
+These key findings allow policymakers to develop targeted interventions for at-risk healthcare establishments in the city. This can be in the form of data-informed infection control practices, seasonal changes in resource allocation, and better information distribution. Further work is needed to enhance this study’s findings and inform policy development by pooling data from more than just 2024 and analysing decades-long trends in infection outbreaks in the city. Moreover, the study can be further built upon by developing a model to locate geographic hotspots for infections in the city and developing district-based policies to combat this issue.
+
+\newpage
 
 # Appendix 
 
-# Appendix A: Idealized Survey: Methodology
+## Appendix A: Idealized Survey: Methodology
 
 A trend noticed in our modelling results was that LTCHs report the highest number of outbreaks in comparison to other healthcare settings. It is essential to understand the reasoning behind this in order to better inform policy reform and resource reallocation to curb this issue. Using an idealized survey methodology, this survey aims to identify potential issues in the availability of care, LTCH organizational structure, and other demographic or environmental factors that may influence their pattern of increased outbreaks. Further, it would be ideal to compare the responses of LTCH workers and hospital workers, which reported the least amount of outbreaks overall, to note any discrepancies in operation that may be contributing to the increased outbreaks in LTCH.
 
-Sampling Approach 
+## Sampling Approach 
 
 Population: Our population of interest are LTCH and hospitals that report infectious outbreaks. Specifically, we are aiming to gain information about the nature of work settings in these healthcare institutions. For this, it is best to contact hospital and LTCH workers, administrators and nursing staff to understand the quality of care provided to the patients as well as the quality of infection control and disease prevention employed at these institutions. A comparison of the nature of infection control practices conducted at hospitals and LTCH will also provide key insights into the issue. 
 Frame: The frame includes workers of LTCH and hospitals in Toronto who have worked in this setting for the past year. This frame can be obtained from hospital and LTCH people directories, by directly contacting these healthcare institutions, and involving Toronto Public Health in the data collection process. 
@@ -149,11 +296,11 @@ Recruitment Strategy
 
 Given that we wish to collect data on specific healthcare institutions instead of individual caregivers, it would be apt to target healthcare institutions to be able to reach all their staff. This can be done by contacting the list of institutions listed in our original Open Data Toronto dataset, contacting other listed hospitals and LTCH as listed by Toronto Public Health, and also contacting any community-based facilities that may operate in the city. These institutions can be contacted by email, telephone, etc. Any individual healthcare workers who aren’t actively working in a healthcare setting can also be contacted by reviewing the healthcare worker directory by Toronto Public Health and being contacted via email or phone, or by running ads in Toronto (in subway stations, on the radio, on social media, at universities) requesting healthcare workers to fill out our survey. This ensures that we not only capture active healthcare staff but also staff that may be on leave, may have worked in healthcare settings in the past, or may have switched careers or healthcare institutions.
 
-Non-Response Handling
+## Non-Response Handling
 
 If healthcare institutions do not respond, we can follow up with them via alternative modes of communication such as emailing other departments at the institution, follow-up phone calls, contacting them via social media, etc. Individual healthcare workers can also be provided additional incentives such as giveaways or a remuneration for completing the survey. Workers will also be ensured that all their data will be anonymous to promote participation. Further, healthcare institutions will be briefed upon the reason for this study, the potential for resource allocation to alleviate the stress on LTCH and to better support them, and to curb the level of infection outbreaks in Toronto. These reasons will promote healthcare institutions to participate in the study - for reduced outbreak levels and better funding opportunities. 
 
-Strengths & Limitations
+## Strengths & Limitations
 
 This survey aims to gain specific insight regarding the trend of high infection outbreaks in LTCH as compared to other healthcare institutions, specifically hospitals, that have reported a significantly smaller number of outbreaks in comparison to LTCH. This survey thus targets healthcare workers, caregivers, staff and administrators to understand the infection prevention and control practices at these institutions as well as the quality of care given. 
 This survey is a robust tool for understanding the granular, facility-level difficulties an institution might undergo in handling outbreaks. By collecting institution-by-institution data, we can ensure that resource reallocation, budget reforms, and overall policy reforms can be made at the district-level, and not just the city-wide level to meet the individual needs of institutions or a group of institutions. A comparison between LTCH and hospital care practices also provides us with specific insight into how to better handle certain prevention procedures. Further, information about specific institutions can allow us to identify potential heatmaps in the city where greater outbreaks occur, and understand any underlying socio-economic or environmental factors contributing to this. For example, LTCH may quote lower staff-to-resident ratios, older building infrastructure or shared dining/recreational areas as reasons for higher outbreaks. Further, LTCHs tend to have older residents that may have comorbid conditions and increased health vulnerabilities due to a weaker immune system. 
@@ -166,7 +313,7 @@ A sample survey was created using Google Forms, and can be found here: https://f
 
 All survey questions can be found below as well. 
 
-Toronto Infection Outbreak Tracking Survey
+## Toronto Infection Outbreak Tracking Survey
 
 Introduction
 
@@ -390,6 +537,8 @@ What challenges does your facility face in implementing outbreak prevention and 
 Are there any specific recommendations you would like to make for improving infection control in long-term care homes?
 Final Section
 Thank you so much for participating in this survey! Feel free to contact us by emailing div.gupta@utoronto.ca in case of any questions.
+
+\newpage 
 
 # References
 
